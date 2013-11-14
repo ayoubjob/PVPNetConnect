@@ -5,45 +5,40 @@ using System.Text;
 
 namespace PVPNetConnect.RiotObjects.Team
 {
+    public class TeamId : RiotGamesObject
+    {
+        public override string TypeName
+        {
+            get { return this.type; }
+        }
 
-public class TeamId : RiotGamesObject
-{
-public override string TypeName
-{
-get
-{
-return this.type;
-}
-}
+        private string type = "com.riotgames.team.TeamId";
 
-private string type = "com.riotgames.team.TeamId";
+        public TeamId()
+        {
+        }
 
-public TeamId()
-{
-}
+        public TeamId(Callback callback)
+        {
+            this.callback = callback;
+        }
 
-public TeamId(Callback callback)
-{
-this.callback = callback;
-}
+        public TeamId(TypedObject result)
+        {
+            base.SetFields(this, result);
+        }
 
-public TeamId(TypedObject result)
-{
-base.SetFields(this, result);
-}
+        public delegate void Callback(TeamId result);
 
-public delegate void Callback(TeamId result);
+        private Callback callback;
 
-private Callback callback;
+        public override void DoCallback(TypedObject result)
+        {
+            base.SetFields(this, result);
+            callback(this);
+        }
 
-public override void DoCallback(TypedObject result)
-{
-base.SetFields(this, result);
-callback(this);
-}
-
-[InternalName("fullId")]
-public String FullId { get; set; }
-
-}
+        [InternalName("fullId")]
+        public String FullId { get; set; }
+    }
 }

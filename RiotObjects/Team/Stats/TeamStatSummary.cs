@@ -6,51 +6,46 @@ using PVPNetConnect.RiotObjects.Team;
 
 namespace PVPNetConnect.RiotObjects.Team.Stats
 {
+    public class TeamStatSummary : RiotGamesObject
+    {
+        public override string TypeName
+        {
+            get { return this.type; }
+        }
 
-public class TeamStatSummary : RiotGamesObject
-{
-public override string TypeName
-{
-get
-{
-return this.type;
-}
-}
+        private string type = "com.riotgames.team.stats.TeamStatSummary";
 
-private string type = "com.riotgames.team.stats.TeamStatSummary";
+        public TeamStatSummary()
+        {
+        }
 
-public TeamStatSummary()
-{
-}
+        public TeamStatSummary(Callback callback)
+        {
+            this.callback = callback;
+        }
 
-public TeamStatSummary(Callback callback)
-{
-this.callback = callback;
-}
+        public TeamStatSummary(TypedObject result)
+        {
+            base.SetFields(this, result);
+        }
 
-public TeamStatSummary(TypedObject result)
-{
-base.SetFields(this, result);
-}
+        public delegate void Callback(TeamStatSummary result);
 
-public delegate void Callback(TeamStatSummary result);
+        private Callback callback;
 
-private Callback callback;
+        public override void DoCallback(TypedObject result)
+        {
+            base.SetFields(this, result);
+            callback(this);
+        }
 
-public override void DoCallback(TypedObject result)
-{
-base.SetFields(this, result);
-callback(this);
-}
+        [InternalName("teamStatDetails")]
+        public List<TeamStatDetail> TeamStatDetails { get; set; }
 
-[InternalName("teamStatDetails")]
-public List<TeamStatDetail> TeamStatDetails { get; set; }
+        [InternalName("teamIdString")]
+        public String TeamIdString { get; set; }
 
-[InternalName("teamIdString")]
-public String TeamIdString { get; set; }
-
-[InternalName("teamId")]
-public TeamId TeamId { get; set; }
-
-}
+        [InternalName("teamId")]
+        public TeamId TeamId { get; set; }
+    }
 }

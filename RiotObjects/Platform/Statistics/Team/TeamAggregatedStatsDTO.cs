@@ -6,54 +6,49 @@ using PVPNetConnect.RiotObjects.Team;
 
 namespace PVPNetConnect.RiotObjects.Platform.Statistics.Team
 {
+    public class TeamAggregatedStatsDTO : RiotGamesObject
+    {
+        public override string TypeName
+        {
+            get { return this.type; }
+        }
 
-public class TeamAggregatedStatsDTO : RiotGamesObject
-{
-public override string TypeName
-{
-get
-{
-return this.type;
-}
-}
+        private string type = "com.riotgames.platform.statistics.team.TeamAggregatedStatsDTO";
 
-private string type = "com.riotgames.platform.statistics.team.TeamAggregatedStatsDTO";
+        public TeamAggregatedStatsDTO()
+        {
+        }
 
-public TeamAggregatedStatsDTO()
-{
-}
+        public TeamAggregatedStatsDTO(Callback callback)
+        {
+            this.callback = callback;
+        }
 
-public TeamAggregatedStatsDTO(Callback callback)
-{
-this.callback = callback;
-}
+        public TeamAggregatedStatsDTO(TypedObject result)
+        {
+            base.SetFields(this, result);
+        }
 
-public TeamAggregatedStatsDTO(TypedObject result)
-{
-base.SetFields(this, result);
-}
+        public delegate void Callback(TeamAggregatedStatsDTO result);
 
-public delegate void Callback(TeamAggregatedStatsDTO result);
+        private Callback callback;
 
-private Callback callback;
+        public override void DoCallback(TypedObject result)
+        {
+            base.SetFields(this, result);
+            callback(this);
+        }
 
-public override void DoCallback(TypedObject result)
-{
-base.SetFields(this, result);
-callback(this);
-}
+        [InternalName("queueType")]
+        public String QueueType { get; set; }
 
-[InternalName("queueType")]
-public String QueueType { get; set; }
+        [InternalName("serializedToJson")]
+        public String SerializedToJson { get; set; }
 
-[InternalName("serializedToJson")]
-public String SerializedToJson { get; set; }
+        [InternalName("playerAggregatedStatsList")]
+        public List<TeamPlayerAggregatedStatsDTO> PlayerAggregatedStatsList { get; set; }
 
-[InternalName("playerAggregatedStatsList")]
-public List<TeamPlayerAggregatedStatsDTO> PlayerAggregatedStatsList { get; set; }
-
-[InternalName("teamId")]
-public TeamId TeamId { get; set; }
-
-}
+        [InternalName("teamId")]
+        public TeamId TeamId { get; set; }
+    }
 }

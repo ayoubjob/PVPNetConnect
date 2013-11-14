@@ -5,66 +5,61 @@ using System.Text;
 
 namespace PVPNetConnect.RiotObjects.Platform.Summoner
 {
+    public class PublicSummoner : RiotGamesObject
+    {
+        public override string TypeName
+        {
+            get { return this.type; }
+        }
 
-public class PublicSummoner : RiotGamesObject
-{
-public override string TypeName
-{
-get
-{
-return this.type;
-}
-}
+        private string type = "com.riotgames.platform.summoner.PublicSummoner";
 
-private string type = "com.riotgames.platform.summoner.PublicSummoner";
+        public PublicSummoner()
+        {
+        }
 
-public PublicSummoner()
-{
-}
+        public PublicSummoner(Callback callback)
+        {
+            this.callback = callback;
+        }
 
-public PublicSummoner(Callback callback)
-{
-this.callback = callback;
-}
+        public PublicSummoner(TypedObject result)
+        {
+            base.SetFields(this, result);
+        }
 
-public PublicSummoner(TypedObject result)
-{
-base.SetFields(this, result);
-}
+        public delegate void Callback(PublicSummoner result);
 
-public delegate void Callback(PublicSummoner result);
+        private Callback callback;
 
-private Callback callback;
+        public override void DoCallback(TypedObject result)
+        {
+            base.SetFields(this, result);
+            callback(this);
+        }
 
-public override void DoCallback(TypedObject result)
-{
-base.SetFields(this, result);
-callback(this);
-}
+        [InternalName("internalName")]
+        public String InternalName { get; set; }
 
-[InternalName("internalName")]
-public String InternalName { get; set; }
+        [InternalName("acctId")]
+        public Double AcctId { get; set; }
 
-[InternalName("acctId")]
-public Double AcctId { get; set; }
+        [InternalName("name")]
+        public String Name { get; set; }
 
-[InternalName("name")]
-public String Name { get; set; }
+        [InternalName("profileIconId")]
+        public Int32 ProfileIconId { get; set; }
 
-[InternalName("profileIconId")]
-public Int32 ProfileIconId { get; set; }
+        [InternalName("revisionDate")]
+        public DateTime RevisionDate { get; set; }
 
-[InternalName("revisionDate")]
-public DateTime RevisionDate { get; set; }
+        [InternalName("revisionId")]
+        public Double RevisionId { get; set; }
 
-[InternalName("revisionId")]
-public Double RevisionId { get; set; }
+        [InternalName("summonerLevel")]
+        public Double SummonerLevel { get; set; }
 
-[InternalName("summonerLevel")]
-public Double SummonerLevel { get; set; }
-
-[InternalName("summonerId")]
-public Double SummonerId { get; set; }
-
-}
+        [InternalName("summonerId")]
+        public Double SummonerId { get; set; }
+    }
 }
