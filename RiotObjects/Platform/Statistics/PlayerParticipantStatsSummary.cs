@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using PVPNetConnect.RiotObjects.Team;
 
 namespace PVPNetConnect.RiotObjects.Platform.Statistics
 {
@@ -71,6 +70,12 @@ namespace PVPNetConnect.RiotObjects.Platform.Statistics
         [InternalName("botPlayer")]
         public Boolean BotPlayer { get; set; }
 
+        [InternalName("isMe")]
+        public Boolean IsMe { get; set; }
+
+        [InternalName("inChat")]
+        public Boolean InChat { get; set; }
+
         [InternalName("userId")]
         public Double UserId { get; set; }
 
@@ -88,5 +93,14 @@ namespace PVPNetConnect.RiotObjects.Platform.Statistics
 
         [InternalName("spell1Id")]
         public Double Spell1Id { get; set; }
+
+        [InternalName("teamInfo")]
+        public TeamInfo TeamInfo { get; set; }
+
+        [InternalName("reportEnabled")]
+        public Boolean ReportEnabled { get; set; }
+
+        [InternalName("kudosEnabled")]
+        public Boolean KudosEnabled { get; set; }
     }
 }

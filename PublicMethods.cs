@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using PVPNetConnect.RiotObjects;
 using PVPNetConnect.RiotObjects.Leagues.Pojo;
 using PVPNetConnect.RiotObjects.Platform.Catalog.Champion;
 using PVPNetConnect.RiotObjects.Platform.Clientfacade.Domain;
@@ -18,6 +17,7 @@ using PVPNetConnect.RiotObjects.Platform.Statistics;
 using PVPNetConnect.RiotObjects.Platform.Statistics.Team;
 using PVPNetConnect.RiotObjects.Platform.Summoner;
 using PVPNetConnect.RiotObjects.Platform.Summoner.Boost;
+using PVPNetConnect.RiotObjects.Platform.Summoner.Icon;
 using PVPNetConnect.RiotObjects.Platform.Summoner.Masterybook;
 using PVPNetConnect.RiotObjects.Platform.Summoner.Runes;
 using PVPNetConnect.RiotObjects.Platform.Summoner.Spellbook;
@@ -1078,7 +1078,7 @@ namespace PVPNetConnect
 
         public async Task<object> AcceptPoppedGame(bool accept)
         {
-            int Id = Invoke("matchmakerService", "acceptInviteForMatchmakingGame", new object[] {accept});
+            int Id = Invoke("gameService", "acceptPoppedGame", new object[] {accept});
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
             results.Remove(Id);
@@ -1155,21 +1155,54 @@ namespace PVPNetConnect
             return result;
         }
 
-        //Todo - fix these
-
-        public async Task<object> GetSummonerRunes(Double summonerId)
+        public async Task<QueueInfo> GetQueueInformation(double queueId)
         {
-            int Id = Invoke("summonerRuneService", "getSummonerRunes", new object[] {summonerId});
+            int Id = Invoke("matchmakerService", "getQueueInfo", new object[] { queueId });
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
+            TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
+            QueueInfo result = new QueueInfo(messageBody);
             results.Remove(Id);
-            return null;
+            return result;
         }
 
+        public async Task<SummonerIconInventoryDTO> GetSummonerIconInventory(double summonerId)
+        {
+            int Id = Invoke("summonerIconService", "getSummonerIconInventory", new object[] { summonerId });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
+            SummonerIconInventoryDTO result = new SummonerIconInventoryDTO(messageBody);
+            results.Remove(Id);
+            return result;
+        }
+
+        //Todo - get actual data objects
+        public async Task<object> GetGameMapList()
+        {
+            int Id = Invoke("gameMapService", "getGameMapList", new object[] { });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
+            results.Remove(Id);
+            return messageBody;
+        }
+
+        public async Task<object> GetPotentialTraders()
+        {
+            int Id = Invoke("lcdsChampionTradeService", "getPotentialTraders", new object[] { });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
+            results.Remove(Id);
+            return messageBody;
+        }
+
+        //Todo - fix these
         //PlayerPreferences as first param
         public async Task<object> SavePreferences(object arg0)
         {
-            int Id = Invoke("playerPreferencesService", "savePreferences", new object[] {arg0, arg1, arg2});
+            int Id = Invoke("playerPreferencesService", "savePreferences", new object[] {arg0});
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
             results.Remove(Id);
@@ -1188,15 +1221,6 @@ namespace PVPNetConnect
         public async Task<object> LeaveTeam(int arg0, TeamId teamId)
         {
             int Id = Invoke("summonerTeamService", "leaveTeam", new object[] {arg0, teamId.GetBaseTypedObject()});
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
-        public async Task<object> CreateTeam(string Name, string Tag)
-        {
-            int Id = Invoke("summonerTeamService", "createTeam", new object[] {Name, Tag});
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
             results.Remove(Id);
@@ -1250,15 +1274,6 @@ namespace PVPNetConnect
 
         //gameService tradeChampion exists... not sure if in use though
 
-        public async Task<object> GetPotentialTraders()
-        {
-            int Id = Invoke("lcdsChampionTradeService", "getPotentialTraders", new object[] {});
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
         public async Task<object> SaveSpellBook(SpellBookDTO Spellbook)
         {
             int Id = Invoke("spellBookService", "saveSpellBook", new object[] {Spellbook});
@@ -1277,45 +1292,9 @@ namespace PVPNetConnect
             return null;
         }
 
-        public async Task<object> IsStoreEnabled()
-        {
-            int Id = Invoke("inventoryService", "isStoreEnabled", new object[] {});
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
-        public async Task<object> GetGameMapList()
-        {
-            int Id = Invoke("gameMapService", "getGameMapList", new object[] {});
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
-        public async Task<object> GetGameMapSet()
-        {
-            int Id = Invoke("gameMapService", "getGameMapSet", new object[] {});
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
         public async Task<object> CancelFromQueueIfPossible(int arg0)
         {
             int Id = Invoke("matchmakerService", "cancelFromQueueIfPossible", new object[] {arg0});
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
-        public async Task<object> GetQueueInformation(int arg0)
-        {
-            int Id = Invoke("matchmakerService", "getQueueInfo", new object[] {arg0});
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
             results.Remove(Id);
@@ -1373,7 +1352,6 @@ namespace PVPNetConnect
         * loginService getLoggedInAccountView
         * lcdsRerollService getPointsBalance
         * lcdsRerollService roll
-        * summonerIconService getSummonerIconInventory
       */
     }
 }

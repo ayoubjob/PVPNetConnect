@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using PVPNetConnect.RiotObjects.Team;
 
 namespace PVPNetConnect.RiotObjects.Platform.Statistics
@@ -70,10 +68,10 @@ namespace PVPNetConnect.RiotObjects.Platform.Statistics
         public Int32 BasePoints { get; set; }
 
         [InternalName("reportGameId")]
-        public object ReportGameId { get; set; }
+        public Int32 ReportGameId { get; set; }
 
         [InternalName("difficulty")]
-        public object Difficulty { get; set; }
+        public String Difficulty { get; set; }
 
         [InternalName("gameLength")]
         public Double GameLength { get; set; }
@@ -88,13 +86,13 @@ namespace PVPNetConnect.RiotObjects.Platform.Statistics
         public TeamInfo OtherTeamInfo { get; set; }
 
         [InternalName("roomName")]
-        public object RoomName { get; set; }
+        public String RoomName { get; set; }
 
         [InternalName("customMinutesLeftToday")]
         public Int32 CustomMinutesLeftToday { get; set; }
 
         [InternalName("userId")]
-        public object UserId { get; set; }
+        public Int32 UserId { get; set; }
 
         [InternalName("pointsPenalties")]
         public List<object> PointsPenalties { get; set; }
@@ -136,7 +134,7 @@ namespace PVPNetConnect.RiotObjects.Platform.Statistics
         public Double LoyaltyBoostXpEarned { get; set; }
 
         [InternalName("roomPassword")]
-        public object RoomPassword { get; set; }
+        public String RoomPassword { get; set; }
 
         [InternalName("elo")]
         public Int32 Elo { get; set; }
@@ -176,5 +174,8 @@ namespace PVPNetConnect.RiotObjects.Platform.Statistics
 
         [InternalName("customMsecsUntilReset")]
         public Double CustomMsecsUntilReset { get; set; }
+
+        [InternalName("rerollEarned")]
+        public Double RerollPointsEarned { get; set; }
     }
 }

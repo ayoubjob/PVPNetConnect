@@ -26,20 +26,15 @@ namespace PVPNetConnect.RiotObjects
         [InternalName("dataVersion")]
         public int DataVersion { get; set; }
 
-
         public TypedObject GetBaseTypedObject()
         {
             TypedObject typedObject = new TypedObject(TypeName);
             Type objectType = this.GetType();
 
-            foreach (
-                var prop in
-                    objectType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance |
-                                             BindingFlags.DeclaredOnly))
+            foreach (var prop in objectType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
-                var intern =
-                    prop.GetCustomAttributes(typeof (InternalNameAttribute), false).FirstOrDefault() as
-                        InternalNameAttribute;
+
+                var intern = prop.GetCustomAttributes(typeof(InternalNameAttribute), false).FirstOrDefault() as InternalNameAttribute;
                 if (intern == null)
                     continue;
 
@@ -48,23 +43,23 @@ namespace PVPNetConnect.RiotObjects
                 var type = prop.PropertyType;
 
                 string typeName = type.Name;
-                if (type == typeof (int[]))
+                if (type == typeof(int[]))
                 {
                     var test = prop.GetValue(this) as int[];
                     if (test != null) value = test.Cast<object>().ToArray();
                 }
-                else if (type == typeof (double[]))
+                else if (type == typeof(double[]))
                 {
                     var test = prop.GetValue(this) as double[];
                     if (test != null) value = test.Cast<object>().ToArray();
                 }
-                else if (type == typeof (string[]))
+                else if (type == typeof(string[]))
                 {
                     var test = prop.GetValue(this) as string[];
                     if (test != null) value = test.Cast<object>().ToArray();
                 }
-                    //List = Array Collection. Object array = object array
-                else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (List<>))
+                //List = Array Collection. Object array = object array
+                else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
                 {
                     IList listValues = prop.GetValue(this) as IList;
                     if (listValues != null)
@@ -76,7 +71,7 @@ namespace PVPNetConnect.RiotObjects
                         {
                             Type obType = ob.GetType();
 
-                            if (typeof (RiotGamesObject).IsAssignableFrom(obType))
+                            if (typeof(RiotGamesObject).IsAssignableFrom(obType))
                             {
                                 RiotGamesObject rgo = ob as RiotGamesObject;
 
@@ -93,7 +88,7 @@ namespace PVPNetConnect.RiotObjects
                         value = TypedObject.MakeArrayCollection(finalObjList.ToArray());
                     }
                 }
-                else if (typeof (RiotGamesObject).IsAssignableFrom(type))
+                else if (typeof(RiotGamesObject).IsAssignableFrom(type))
                 {
                     RiotGamesObject rgo = prop.GetValue(this) as RiotGamesObject;
 
@@ -109,14 +104,9 @@ namespace PVPNetConnect.RiotObjects
 
             Type objectBaseType = objectType.BaseType;
             if (objectBaseType != null)
-                foreach (
-                    var prop in
-                        objectBaseType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
-                                                     BindingFlags.Instance | BindingFlags.DeclaredOnly))
+                foreach (var prop in objectBaseType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly))
                 {
-                    var intern =
-                        prop.GetCustomAttributes(typeof (InternalNameAttribute), false).FirstOrDefault() as
-                            InternalNameAttribute;
+                    var intern = prop.GetCustomAttributes(typeof(InternalNameAttribute), false).FirstOrDefault() as InternalNameAttribute;
                     if (intern == null || typedObject.ContainsKey(intern.Name))
                         continue;
 
@@ -125,7 +115,6 @@ namespace PVPNetConnect.RiotObjects
 
             return typedObject;
         }
-
         /// <summary>
         /// The base virtual DoCallback method.
         /// </summary>
@@ -149,14 +138,9 @@ namespace PVPNetConnect.RiotObjects
 
             TypeName = result.type;
 
-            foreach (
-                var prop in
-                    typeof (T).GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance |
-                                             BindingFlags.DeclaredOnly))
+            foreach (var prop in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
-                var intern =
-                    prop.GetCustomAttributes(typeof (InternalNameAttribute), false).FirstOrDefault() as
-                        InternalNameAttribute;
+                var intern = prop.GetCustomAttributes(typeof(InternalNameAttribute), false).FirstOrDefault() as InternalNameAttribute;
                 if (intern == null)
                     continue;
 
@@ -175,43 +159,43 @@ namespace PVPNetConnect.RiotObjects
                     {
                         value = null;
                     }
-                    else if (type == typeof (string))
+                    else if (type == typeof(string))
                     {
                         value = Convert.ToString(result[intern.Name]);
                     }
-                    else if (type == typeof (Int32))
+                    else if (type == typeof(Int32))
                     {
                         value = Convert.ToInt32(result[intern.Name]);
                     }
-                    else if (type == typeof (Int64))
+                    else if (type == typeof(Int64))
                     {
                         value = Convert.ToInt64(result[intern.Name]);
                     }
-                    else if (type == typeof (double))
+                    else if (type == typeof(double))
                     {
                         value = Convert.ToInt64(result[intern.Name]);
                     }
-                    else if (type == typeof (bool))
+                    else if (type == typeof(bool))
                     {
                         value = Convert.ToBoolean(result[intern.Name]);
                     }
-                    else if (type == typeof (DateTime))
+                    else if (type == typeof(DateTime))
                     {
                         value = result[intern.Name];
                     }
-                    else if (type == typeof (TypedObject))
+                    else if (type == typeof(TypedObject))
                     {
-                        value = (TypedObject) result[intern.Name];
+                        value = (TypedObject)result[intern.Name];
                     }
 
-                    else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (List<>))
+                    else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
                     {
                         object[] temp = result.GetArray(intern.Name);
 
                         // Create List<T> with correct T type by reflection
                         Type elementType = type.GetGenericArguments()[0];
-                        var genericListType = typeof (List<>).MakeGenericType(new[] {elementType});
-                        IList objectList = (IList) Activator.CreateInstance(genericListType);
+                        var genericListType = typeof(List<>).MakeGenericType(new[] { elementType });
+                        IList objectList = (IList)Activator.CreateInstance(genericListType);
 
                         foreach (object data in temp)
                         {
@@ -219,43 +203,40 @@ namespace PVPNetConnect.RiotObjects
                             {
                                 objectList.Add(null);
                             }
-                            if (elementType == typeof (string))
+                            if (elementType == typeof(string))
                             {
-                                objectList.Add((string) data);
+                                objectList.Add((string)data);
                             }
-                            else if (elementType == typeof (PVPNetConnect.RiotObjects.Platform.Game.Participant))
+                            else if (elementType == typeof(PVPNetConnect.RiotObjects.Platform.Game.Participant))
                             {
-                                TypedObject dataAsTo = (TypedObject) data;
+                                TypedObject dataAsTo = (TypedObject)data;
                                 if (dataAsTo.type == "com.riotgames.platform.game.BotParticipant")
                                     objectList.Add(new PVPNetConnect.RiotObjects.Platform.Game.BotParticipant(dataAsTo));
                                 else if (dataAsTo.type == "com.riotgames.platform.game.ObfuscatedParticipant")
-                                    objectList.Add(
-                                        new PVPNetConnect.RiotObjects.Platform.Game.ObfuscatedParticipant(dataAsTo));
+                                    objectList.Add(new PVPNetConnect.RiotObjects.Platform.Game.ObfuscatedParticipant(dataAsTo));
                                 else if (dataAsTo.type == "com.riotgames.platform.game.PlayerParticipant")
-                                    objectList.Add(
-                                        new PVPNetConnect.RiotObjects.Platform.Game.PlayerParticipant(dataAsTo));
+                                    objectList.Add(new PVPNetConnect.RiotObjects.Platform.Game.PlayerParticipant(dataAsTo));
                                 else if (dataAsTo.type == "com.riotgames.platform.reroll.pojo.AramPlayerParticipant")
-                                    objectList.Add(
-                                        new PVPNetConnect.RiotObjects.Platform.Reroll.Pojo.AramPlayerParticipant(
-                                            dataAsTo));
+                                    objectList.Add(new PVPNetConnect.RiotObjects.Platform.Reroll.Pojo.AramPlayerParticipant(dataAsTo));
                             }
                             else
                             {
+
                                 objectList.Add(Activator.CreateInstance(elementType, data));
                             }
                         }
 
                         value = objectList;
                     }
-                    else if (type == typeof (Dictionary<string, object>))
+                    else if (type == typeof(Dictionary<string, object>))
                     {
-                        Dictionary<string, object> dict = (Dictionary<string, object>) result[intern.Name];
+                        Dictionary<string, object> dict = (Dictionary<string, object>)result[intern.Name];
 
                         value = dict;
                     }
-                    else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Dictionary<,>))
+                    else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                     {
-                        Dictionary<string, object> dict = (Dictionary<string, object>) result[intern.Name];
+                        Dictionary<string, object> dict = (Dictionary<string, object>)result[intern.Name];
 
                         value = dict;
                         //TypedObject to = result.GetTO(intern.Name);
@@ -265,29 +246,29 @@ namespace PVPNetConnect.RiotObjects
                         //IDictionary objectDictionary = (IDictionary)Activator.CreateInstance(genericDictionaryType);
 
                         /*
-                  foreach (string key in to.Keys)
-                  {
-                     if (to[key] == null)
-                        objectDictionary.Add(key, null);
-                     else
-                        objectDictionary.Add(key, Activator.CreateInstance(elementTypes[1], to[key]));
-                  }
-                  */
+                        foreach (string key in to.Keys)
+                        {
+                           if (to[key] == null)
+                              objectDictionary.Add(key, null);
+                           else
+                              objectDictionary.Add(key, Activator.CreateInstance(elementTypes[1], to[key]));
+                        }
+                        */
                         //value = objectDictionary;
                     }
-                    else if (type == typeof (Int32[]))
+                    else if (type == typeof(Int32[]))
                     {
                         value = result.GetArray(intern.Name).Cast<Int32>().ToArray();
                     }
-                    else if (type == typeof (String[]))
+                    else if (type == typeof(String[]))
                     {
                         value = result.GetArray(intern.Name).Cast<String>().ToArray();
                     }
-                    else if (type == typeof (object[]))
+                    else if (type == typeof(object[]))
                     {
                         value = result.GetArray(intern.Name);
                     }
-                    else if (type == typeof (object))
+                    else if (type == typeof(object))
                     {
                         value = result[intern.Name];
                     }
@@ -299,8 +280,8 @@ namespace PVPNetConnect.RiotObjects
                         }
                         catch (Exception e)
                         {
-                            throw new NotSupportedException(
-                                string.Format("Type {0} not supported by flash serializer", type.FullName), e);
+                            throw new NotSupportedException(string.Format("Type {0} not supported by flash serializer", type.FullName), e);
+
                         }
                     }
                     prop.SetValue(obj, value, null);
@@ -308,6 +289,7 @@ namespace PVPNetConnect.RiotObjects
                 catch
                 {
                 }
+
             }
         }
     }
@@ -334,4 +316,5 @@ namespace PVPNetConnect.RiotObjects
             Name = name;
         }
     }
+
 }

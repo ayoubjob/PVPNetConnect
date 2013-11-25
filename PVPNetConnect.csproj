@@ -57,6 +57,7 @@
     <Compile Include="RiotObjects\Platform\Catalog\Champion\ChampionDTO.cs" />
     <Compile Include="RiotObjects\Platform\Catalog\Champion\ChampionSkinDTO.cs" />
     <Compile Include="RiotObjects\Platform\Catalog\Effect.cs" />
+    <Compile Include="RiotObjects\Platform\Catalog\Icon\Icon.cs" />
     <Compile Include="RiotObjects\Platform\Catalog\ItemEffect.cs" />
     <Compile Include="RiotObjects\Platform\Catalog\Runes\Rune.cs" />
     <Compile Include="RiotObjects\Platform\Catalog\Runes\RuneType.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="RiotObjects\Platform\Game\GameTypeConfigDTO.cs" />
     <Compile Include="RiotObjects\Platform\Game\Map\GameMap.cs" />
     <Compile Include="RiotObjects\Platform\Game\Message\GameNotification.cs" />
-    <Compile Include="RiotObjects\Platform\Game\ObfruscatedParticipant.cs" />
+    <Compile Include="RiotObjects\Platform\Game\ObfuscatedParticipant.cs" />
     <Compile Include="RiotObjects\Platform\Game\Participant.cs" />
     <Compile Include="RiotObjects\Platform\Game\PlatformGameLifecycleDTO.cs" />
     <Compile Include="RiotObjects\Platform\Game\PlayerChampionSelectionDTO.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="RiotObjects\Platform\Matchmaking\GameQueueConfig.cs" />
     <Compile Include="RiotObjects\Platform\Matchmaking\MatchingThrottleConfig.cs" />
     <Compile Include="RiotObjects\Platform\Matchmaking\MatchMakerParams.cs" />
+    <Compile Include="RiotObjects\Platform\Matchmaking\QueueDodger.cs" />
     <Compile Include="RiotObjects\Platform\Matchmaking\QueueInfo.cs" />
     <Compile Include="RiotObjects\Platform\Matchmaking\SearchingForMatchNotification.cs" />
     <Compile Include="RiotObjects\Platform\Messaging\StoreAccountBalanceNotification.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="RiotObjects\Platform\Summoner\AllSummonerData.cs" />
     <Compile Include="RiotObjects\Platform\Summoner\BasePublicSummonerDTO.cs" />
     <Compile Include="RiotObjects\Platform\Summoner\Boost\SummonerActiveBoostsDTO.cs" />
+    <Compile Include="RiotObjects\Platform\Summoner\Icon\SummonerIconInventoryDTO.cs" />
     <Compile Include="RiotObjects\Platform\Summoner\Masterybook\MasteryBookDTO.cs" />
     <Compile Include="RiotObjects\Platform\Summoner\Masterybook\MasteryBookPageDTO.cs" />
     <Compile Include="RiotObjects\Platform\Summoner\Masterybook\TalentEntry.cs" />

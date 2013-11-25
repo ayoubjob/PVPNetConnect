@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PVPNetConnect.RiotObjects;
 
 namespace PVPNetConnect.RiotObjects.Platform.Statistics
 {

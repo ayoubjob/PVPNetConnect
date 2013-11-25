@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using PVPNetConnect.RiotObjects.Kudos.Dto;
+using PVPNetConnect.RiotObjects.Platform.Broadcast;
+using PVPNetConnect.RiotObjects.Platform.Game;
 using PVPNetConnect.RiotObjects.Platform.Statistics;
 using PVPNetConnect.RiotObjects.Platform.Summoner;
-using PVPNetConnect.RiotObjects.Platform.Broadcast;
 using PVPNetConnect.RiotObjects.Platform.Systemstate;
-using PVPNetConnect.RiotObjects.Kudos.Dto;
-using PVPNetConnect.RiotObjects.Platform.Game;
 
 namespace PVPNetConnect.RiotObjects.Platform.Clientfacade.Domain
 {

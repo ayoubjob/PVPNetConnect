@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PVPNetConnect.RiotObjects.Platform.Matchmaking
 {
@@ -39,7 +36,7 @@ namespace PVPNetConnect.RiotObjects.Platform.Matchmaking
         }
 
         [InternalName("playerJoinFailures")]
-        public object PlayerJoinFailures { get; set; }
+        public List<QueueDodger> PlayerJoinFailures { get; set; }
 
         [InternalName("ghostGameSummoners")]
         public object GhostGameSummoners { get; set; }
