@@ -53,7 +53,6 @@ namespace PVPNetConnect.RiotObjects.Platform.Game.Map
         [InternalName("description")]
         public String Description { get; set; }
 
-
         public static GameMap SummonersRift = new GameMap()
         {
             Description =

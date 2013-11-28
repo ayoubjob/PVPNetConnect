@@ -10,7 +10,6 @@
 
         private Callback callback;
 
-
         public Participant(Callback callback)
         {
             this.callback = callback;

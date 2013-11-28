@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
 
 namespace PVPNetConnect.RiotObjects
@@ -33,7 +32,6 @@ namespace PVPNetConnect.RiotObjects
 
             foreach (var prop in objectType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
-
                 var intern = prop.GetCustomAttributes(typeof(InternalNameAttribute), false).FirstOrDefault() as InternalNameAttribute;
                 if (intern == null)
                     continue;
@@ -115,6 +113,7 @@ namespace PVPNetConnect.RiotObjects
 
             return typedObject;
         }
+
         /// <summary>
         /// The base virtual DoCallback method.
         /// </summary>
@@ -151,7 +150,6 @@ namespace PVPNetConnect.RiotObjects
                 {
                     continue;
                 }
-
 
                 try
                 {
@@ -221,7 +219,6 @@ namespace PVPNetConnect.RiotObjects
                             }
                             else
                             {
-
                                 objectList.Add(Activator.CreateInstance(elementType, data));
                             }
                         }
@@ -281,7 +278,6 @@ namespace PVPNetConnect.RiotObjects
                         catch (Exception e)
                         {
                             throw new NotSupportedException(string.Format("Type {0} not supported by flash serializer", type.FullName), e);
-
                         }
                     }
                     prop.SetValue(obj, value, null);
@@ -289,7 +285,6 @@ namespace PVPNetConnect.RiotObjects
                 catch
                 {
                 }
-
             }
         }
     }
@@ -316,5 +311,4 @@ namespace PVPNetConnect.RiotObjects
             Name = name;
         }
     }
-
 }

@@ -1,5 +1,5 @@
-using System;
 using PVPNetConnect.RiotObjects.Platform.Catalog.Runes;
+using System;
 
 namespace PVPNetConnect.RiotObjects.Platform.Summoner
 {

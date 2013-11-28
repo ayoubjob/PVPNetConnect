@@ -1,5 +1,5 @@
-using System;
 using PVPNetConnect.RiotObjects.Platform.Game;
+using System;
 
 namespace PVPNetConnect.RiotObjects.Platform.Reroll.Pojo
 {

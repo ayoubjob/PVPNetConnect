@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using PVPNetConnect.RiotObjects.Leagues.Pojo;
+using System.Collections.Generic;
 
 namespace PVPNetConnect.RiotObjects.Platform.Leagues.Client.Dto
 {

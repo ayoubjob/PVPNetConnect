@@ -1,5 +1,5 @@
-using System;
 using PVPNetConnect.RiotObjects.Platform.Catalog.Champion;
+using System;
 
 namespace PVPNetConnect.RiotObjects.Platform.Game
 {

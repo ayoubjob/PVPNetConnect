@@ -1,5 +1,5 @@
-using System;
 using PVPNetConnect.RiotObjects.Platform.Game.Map;
+using System;
 
 namespace PVPNetConnect.RiotObjects.Platform.Game
 {

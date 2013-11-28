@@ -1,6 +1,6 @@
+using PVPNetConnect.RiotObjects.Team.Stats;
 using System;
 using System.Collections.Generic;
-using PVPNetConnect.RiotObjects.Team.Stats;
 
 namespace PVPNetConnect.RiotObjects.Team.Dto
 {

@@ -3,7 +3,7 @@
  *
  * @author Gabriel Van Eyck
  */
-///////////////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////////
 //
 //Ported to C# by Ryan A. LaSarre
 //
@@ -20,13 +20,14 @@ namespace PVPNetConnect
     {
         // Stores the data to be consumed while decoding
         private byte[] dataBuffer;
+
         private int dataPos;
 
         // Lists of references and class definitions seen so far
         private List<string> stringReferences = new List<string>();
+
         private List<object> objectReferences = new List<object>();
         private List<ClassDefinition> classDefinitions = new List<ClassDefinition>();
-
 
         private void Reset()
         {
@@ -78,7 +79,6 @@ namespace PVPNetConnect
             result.Add("invokeId", DecodeAMF0());
             result.Add("serviceCall", DecodeAMF0());
             result.Add("data", DecodeAMF0());
-
 
             if (dataPos != dataBuffer.Length)
                 throw new Exception("Did not consume entire buffer: " + dataPos + " of " + dataBuffer.Length);
@@ -275,9 +275,9 @@ namespace PVPNetConnect
 
             if (inline)
             {
-                long ms = (long) ReadDouble();
+                long ms = (long)ReadDouble();
                 DateTime d = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                d = d.AddSeconds(ms/1000);
+                d = d.AddSeconds(ms / 1000);
 
                 objectReferences.Add(d);
 
@@ -311,7 +311,7 @@ namespace PVPNetConnect
             }
             else
             {
-                return (object[]) objectReferences[handle];
+                return (object[])objectReferences[handle];
             }
         }
 
@@ -337,7 +337,7 @@ namespace PVPNetConnect
             }
             else
             {
-                return (List<object>) objectReferences[handle];
+                return (List<object>)objectReferences[handle];
             }
         }
 
@@ -387,14 +387,14 @@ namespace PVPNetConnect
                     else if (cd.type.Equals("flex.messaging.io.ArrayCollection"))
                     {
                         object obj = Decode();
-                        ret = TypedObject.MakeArrayCollection((object[]) obj);
+                        ret = TypedObject.MakeArrayCollection((object[])obj);
                     }
                     else if (cd.type.Equals("com.riotgames.platform.systemstate.ClientSystemStatesNotification") ||
                              cd.type.Equals("com.riotgames.platform.broadcast.BroadcastNotification"))
                     {
                         int size = 0;
                         for (int i = 0; i < 4; i++)
-                            size = size*256 + ReadByteAsInt();
+                            size = size * 256 + ReadByteAsInt();
 
                         byte[] data = ReadBytes(size);
                         StringBuilder sb = new StringBuilder();
@@ -460,7 +460,7 @@ namespace PVPNetConnect
             }
             else
             {
-                return (byte[]) objectReferences[handle];
+                return (byte[])objectReferences[handle];
             }
         }
 
@@ -642,7 +642,7 @@ namespace PVPNetConnect
 
         private int ReadIntAMF0()
         {
-            return (int) ReadDouble();
+            return (int)ReadDouble();
         }
 
         private TypedObject ReadObjectAMF0()

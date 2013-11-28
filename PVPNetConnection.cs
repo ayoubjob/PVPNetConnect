@@ -3,12 +3,16 @@
  *
  * @author Gabriel Van Eyck
  */
-///////////////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////////
 //
 //Ported to C# by Ryan A. LaSarre
 //
 /////////////////////////////////////////////////////////////////////////////////
 
+using PVPNetConnect.RiotObjects;
+using PVPNetConnect.RiotObjects.Platform.Game;
+using PVPNetConnect.RiotObjects.Platform.Game.Message;
+using PVPNetConnect.RiotObjects.Platform.Matchmaking;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,10 +23,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
-using PVPNetConnect.RiotObjects;
-using PVPNetConnect.RiotObjects.Platform.Game;
-using PVPNetConnect.RiotObjects.Platform.Game.Message;
-using PVPNetConnect.RiotObjects.Platform.Matchmaking;
 
 namespace PVPNetConnect
 {
@@ -32,6 +32,7 @@ namespace PVPNetConnect
 
         //RTMPS Connection Info
         private bool isConnected = false;
+
         private bool isLoggedIn = false;
         private TcpClient client;
         private SslStream sslStream;
@@ -43,6 +44,7 @@ namespace PVPNetConnect
 
         //Initial Login Information
         private string user;
+
         private string password;
         private string server;
         private string loginQueue;
@@ -54,9 +56,9 @@ namespace PVPNetConnect
         private string garenaToken;
         private string userID;
 
-
         //Invoke Variables
         private Random rand = new Random();
+
         private JavaScriptSerializer serializer = new JavaScriptSerializer();
 
         private int invokeID = 2;
@@ -69,7 +71,7 @@ namespace PVPNetConnect
         private int heartbeatCount = 1;
         private Thread heartbeatThread;
 
-        #endregion
+        #endregion Member Declarations
 
         #region Event Handlers
 
@@ -97,7 +99,7 @@ namespace PVPNetConnect
 
         public event OnErrorHandler OnError;
 
-        #endregion
+        #endregion Event Handlers
 
         #region Connect, Login, and Heartbeat Methods
 
@@ -222,7 +224,6 @@ namespace PVPNetConnect
 
              userID = Convert.ToString(id);
 
-
              //GET TOKEN
              List<byte> tokenRequestBytes = new List<byte>();
              junk = new byte[] { 0x32, 0x00, 0x00, 0x00, 0x01, 0x03, 0x80, 0x00, 0x00 };
@@ -288,7 +289,7 @@ namespace PVPNetConnect
 
                 int c;
                 while ((c = inputStream.ReadByte()) != -1)
-                    sb.Append((char) c);
+                    sb.Append((char)c);
 
                 TypedObject result = serializer.Deserialize<TypedObject>(sb.ToString());
                 outputStream.Close();
@@ -297,10 +298,10 @@ namespace PVPNetConnect
 
                 if (!result.ContainsKey("token"))
                 {
-                    int node = (int) result.GetInt("node");
+                    int node = (int)result.GetInt("node");
                     string champ = result.GetString("champ");
-                    int rate = (int) result.GetInt("rate");
-                    int delay = (int) result.GetInt("delay");
+                    int rate = (int)result.GetInt("rate");
+                    int delay = (int)result.GetInt("delay");
 
                     int id = 0;
                     int cur = 0;
@@ -308,14 +309,14 @@ namespace PVPNetConnect
                     object[] tickers = result.GetArray("tickers");
                     foreach (object o in tickers)
                     {
-                        Dictionary<string, object> to = (Dictionary<string, object>) o;
+                        Dictionary<string, object> to = (Dictionary<string, object>)o;
 
-                        int tnode = (int) to["node"];
+                        int tnode = (int)to["node"];
                         if (tnode != node)
                             continue;
 
-                        id = (int) to["id"];
-                        cur = (int) to["current"];
+                        id = (int)to["id"];
+                        cur = (int)to["current"];
                         break;
                     }
 
@@ -333,10 +334,9 @@ namespace PVPNetConnect
 
                         int d;
                         while ((d = inputStream.ReadByte()) != -1)
-                            sb.Append((char) d);
+                            sb.Append((char)d);
 
                         result = serializer.Deserialize<TypedObject>(sb.ToString());
-
 
                         inputStream.Close();
                         con.Abort();
@@ -346,7 +346,6 @@ namespace PVPNetConnect
 
                         cur = HexToInt(result.GetString(node.ToString()));
                     }
-
 
                     while (sb.ToString() == null || !result.ContainsKey("token"))
                     {
@@ -360,7 +359,7 @@ namespace PVPNetConnect
                                 else if (OnLoginQueueUpdate != null)
                                     OnLoginQueueUpdate(this, id - cur);
 
-                            Thread.Sleep(delay/10);
+                            Thread.Sleep(delay / 10);
                             con = WebRequest.Create(loginQueue + "login-queue/rest/queue/authToken/" + user.ToLower());
                             con.Method = "GET";
                             webresponse = con.GetResponse();
@@ -368,7 +367,7 @@ namespace PVPNetConnect
 
                             int f;
                             while ((f = inputStream.ReadByte()) != -1)
-                                sb.Append((char) f);
+                                sb.Append((char)f);
 
                             result = serializer.Deserialize<TypedObject>(sb.ToString());
 
@@ -415,9 +414,9 @@ namespace PVPNetConnect
             {
                 char c = hex.ToCharArray()[i];
                 if (c >= '0' && c <= '9')
-                    total = total*16 + c - '0';
+                    total = total * 16 + c - '0';
                 else
-                    total = total*16 + c - 'a' + 10;
+                    total = total * 16 + c - 'a' + 10;
             }
 
             return total;
@@ -434,7 +433,7 @@ namespace PVPNetConnect
 
                 int c;
                 while ((c = response.GetResponseStream().ReadByte()) != -1)
-                    sb.Append((char) c);
+                    sb.Append((char)c);
 
                 con.Abort();
 
@@ -456,17 +455,16 @@ namespace PVPNetConnect
         {
             byte[] handshakePacket = new byte[1537];
             rand.NextBytes(handshakePacket);
-            handshakePacket[0] = (byte) 0x03;
+            handshakePacket[0] = (byte)0x03;
             sslStream.Write(handshakePacket);
 
-            byte S0 = (byte) sslStream.ReadByte();
+            byte S0 = (byte)sslStream.ReadByte();
             if (S0 != 0x03)
             {
                 Error("Server returned incorrect version in handshake: " + S0, ErrorType.Handshake);
                 Disconnect();
                 return false;
             }
-
 
             byte[] responsePacket = new byte[1536];
             sslStream.Read(responsePacket, 0, 1536);
@@ -562,8 +560,7 @@ namespace PVPNetConnect
                 body.Add("username", user);
             }
 
-
-            int id = Invoke("loginService", "login", new object[] {body});
+            int id = Invoke("loginService", "login", new object[] { body });
 
             result = GetResult(id);
             if (result["result"].Equals("_error"))
@@ -575,7 +572,7 @@ namespace PVPNetConnect
 
             body = result.GetTO("data").GetTO("body");
             sessionToken = body.GetString("token");
-            accountID = (int) body.GetTO("accountSummary").GetInt("accountId");
+            accountID = (int)body.GetTO("accountSummary").GetInt("accountId");
 
             // Login 2
 
@@ -589,7 +586,6 @@ namespace PVPNetConnect
 
             id = Invoke(body);
             result = GetResult(id); // Read result (and discard)
-
 
             isLoggedIn = true;
             if (OnLogin != null)
@@ -608,7 +604,6 @@ namespace PVPNetConnect
             return message.GetTO("data").GetTO("rootCause").GetString("errorCode");
         }
 
-
         private void StartHeartbeat()
         {
             heartbeatThread = new Thread(async () =>
@@ -617,7 +612,7 @@ namespace PVPNetConnect
                 {
                     try
                     {
-                        long hbTime = (long) DateTime.Now.TimeOfDay.TotalMilliseconds;
+                        long hbTime = (long)DateTime.Now.TimeOfDay.TotalMilliseconds;
                         string result =
                             await
                                 PerformLCDSHeartBeat(accountID, sessionToken, heartbeatCount,
@@ -628,7 +623,7 @@ namespace PVPNetConnect
                         heartbeatCount++;
 
                         // Quick sleeps to shutdown the heartbeat quickly on a reconnect
-                        while ((long) DateTime.Now.TimeOfDay.TotalMilliseconds - hbTime < 120000)
+                        while ((long)DateTime.Now.TimeOfDay.TotalMilliseconds - hbTime < 120000)
                             Thread.Sleep(100);
                     }
                     catch
@@ -640,7 +635,7 @@ namespace PVPNetConnect
             heartbeatThread.Start();
         }
 
-        #endregion
+        #endregion Connect, Login, and Heartbeat Methods
 
         #region Disconnect Methods
 
@@ -650,7 +645,7 @@ namespace PVPNetConnect
             {
                 if (isConnected)
                 {
-                    int id = Invoke("loginService", "logout", new object[] {authToken});
+                    int id = Invoke("loginService", "logout", new object[] { authToken });
                     Join(id);
                 }
 
@@ -678,7 +673,7 @@ namespace PVPNetConnect
             t.Start();
         }
 
-        #endregion
+        #endregion Disconnect Methods
 
         #region Error Methods
 
@@ -700,7 +695,7 @@ namespace PVPNetConnect
             Error(message, "", type);
         }
 
-        #endregion
+        #endregion Error Methods
 
         #region Send Methods
 
@@ -776,7 +771,7 @@ namespace PVPNetConnect
             return invokeID++;
         }
 
-        #endregion
+        #endregion Send Methods
 
         #region Receive Methods
 
@@ -799,9 +794,9 @@ namespace PVPNetConnect
                     {
                         #region Basic Header
 
-                        byte basicHeader = (byte) sslStream.ReadByte();
+                        byte basicHeader = (byte)sslStream.ReadByte();
                         List<byte> basicHeaderStorage = new List<byte>();
-                        if ((int) basicHeader == 255)
+                        if ((int)basicHeader == 255)
                             Disconnect();
 
                         int channel = 0;
@@ -811,26 +806,26 @@ namespace PVPNetConnect
                             channel = basicHeader & 0x3F;
                             basicHeaderStorage.Add(basicHeader);
                         }
-                            //2 Byte Header
+                        //2 Byte Header
                         else if ((basicHeader & 0x01) != 0)
                         {
-                            byte byte2 = (byte) sslStream.ReadByte();
+                            byte byte2 = (byte)sslStream.ReadByte();
                             channel = 64 + byte2;
                             basicHeaderStorage.Add(basicHeader);
                             basicHeaderStorage.Add(byte2);
                         }
-                            //3 Byte Header
+                        //3 Byte Header
                         else if ((basicHeader & 0x02) != 0)
                         {
-                            byte byte2 = (byte) sslStream.ReadByte();
-                            byte byte3 = (byte) sslStream.ReadByte();
+                            byte byte2 = (byte)sslStream.ReadByte();
+                            byte byte3 = (byte)sslStream.ReadByte();
                             basicHeaderStorage.Add(basicHeader);
                             basicHeaderStorage.Add(byte2);
                             basicHeaderStorage.Add(byte3);
-                            channel = 64 + byte2 + (256*byte3);
+                            channel = 64 + byte2 + (256 * byte3);
                         }
 
-                        #endregion
+                        #endregion Basic Header
 
                         #region Message Header
 
@@ -860,7 +855,7 @@ namespace PVPNetConnect
                             byte[] timestamp = new byte[3];
                             for (int i = 0; i < 3; i++)
                             {
-                                timestamp[i] = (byte) sslStream.ReadByte();
+                                timestamp[i] = (byte)sslStream.ReadByte();
                                 p.AddToRaw(timestamp[i]);
                             }
 
@@ -868,24 +863,24 @@ namespace PVPNetConnect
                             byte[] messageLength = new byte[3];
                             for (int i = 0; i < 3; i++)
                             {
-                                messageLength[i] = (byte) sslStream.ReadByte();
+                                messageLength[i] = (byte)sslStream.ReadByte();
                                 p.AddToRaw(messageLength[i]);
                             }
                             int size = 0;
                             for (int i = 0; i < 3; i++)
-                                size = size*256 + (messageLength[i] & 0xFF);
+                                size = size * 256 + (messageLength[i] & 0xFF);
                             p.SetSize(size);
 
                             //Message Type
                             int messageType = sslStream.ReadByte();
-                            p.AddToRaw((byte) messageType);
+                            p.AddToRaw((byte)messageType);
                             p.SetType(messageType);
 
                             //Message Stream ID
                             byte[] messageStreamID = new byte[4];
                             for (int i = 0; i < 4; i++)
                             {
-                                messageStreamID[i] = (byte) sslStream.ReadByte();
+                                messageStreamID[i] = (byte)sslStream.ReadByte();
                                 p.AddToRaw(messageStreamID[i]);
                             }
                         }
@@ -895,7 +890,7 @@ namespace PVPNetConnect
                             byte[] timestamp = new byte[3];
                             for (int i = 0; i < 3; i++)
                             {
-                                timestamp[i] = (byte) sslStream.ReadByte();
+                                timestamp[i] = (byte)sslStream.ReadByte();
                                 p.AddToRaw(timestamp[i]);
                             }
 
@@ -903,17 +898,17 @@ namespace PVPNetConnect
                             byte[] messageLength = new byte[3];
                             for (int i = 0; i < 3; i++)
                             {
-                                messageLength[i] = (byte) sslStream.ReadByte();
+                                messageLength[i] = (byte)sslStream.ReadByte();
                                 p.AddToRaw(messageLength[i]);
                             }
                             int size = 0;
                             for (int i = 0; i < 3; i++)
-                                size = size*256 + (messageLength[i] & 0xFF);
+                                size = size * 256 + (messageLength[i] & 0xFF);
                             p.SetSize(size);
 
                             //Message Type
                             int messageType = sslStream.ReadByte();
-                            p.AddToRaw((byte) messageType);
+                            p.AddToRaw((byte)messageType);
                             p.SetType(messageType);
                         }
                         else if (headerSize == 4)
@@ -922,7 +917,7 @@ namespace PVPNetConnect
                             byte[] timestamp = new byte[3];
                             for (int i = 0; i < 3; i++)
                             {
-                                timestamp[i] = (byte) sslStream.ReadByte();
+                                timestamp[i] = (byte)sslStream.ReadByte();
                                 p.AddToRaw(timestamp[i]);
                             }
 
@@ -947,14 +942,14 @@ namespace PVPNetConnect
                             }
                         }
 
-                        #endregion
+                        #endregion Message Header
 
                         #region Message Body
 
                         //DefaultChunkSize is 128
                         for (int i = 0; i < 128; i++)
                         {
-                            byte b = (byte) sslStream.ReadByte();
+                            byte b = (byte)sslStream.ReadByte();
                             p.Add(b);
                             p.AddToRaw(b);
 
@@ -973,7 +968,7 @@ namespace PVPNetConnect
                         if (currentPackets.ContainsKey(channel))
                             currentPackets.Remove(channel);
 
-                        #endregion
+                        #endregion Message Body
 
                         // Decode result
                         TypedObject result;
@@ -987,7 +982,7 @@ namespace PVPNetConnect
                             byte[] data = p.GetData();
                             int windowSize = 0;
                             for (int i = 0; i < 4; i++)
-                                windowSize = windowSize*256 + (data[i] & 0xFF);
+                                windowSize = windowSize * 256 + (data[i] & 0xFF);
                             int type = data[4];
                             continue;
                         }
@@ -996,7 +991,7 @@ namespace PVPNetConnect
                             byte[] data = p.GetData();
                             int windowSize = 0;
                             for (int i = 0; i < 4; i++)
-                                windowSize = windowSize*256 + (data[i] & 0xFF);
+                                windowSize = windowSize * 256 + (data[i] & 0xFF);
                             continue;
                         }
                         else if (p.GetPacketType() == 0x03) // Ack
@@ -1004,7 +999,7 @@ namespace PVPNetConnect
                             byte[] data = p.GetData();
                             int ackSize = 0;
                             for (int i = 0; i < 4; i++)
-                                ackSize = ackSize*256 + (data[i] & 0xFF);
+                                ackSize = ackSize * 256 + (data[i] & 0xFF);
                             continue;
                         }
                         else if (p.GetPacketType() == 0x02) //ABORT
@@ -1018,7 +1013,7 @@ namespace PVPNetConnect
                             continue;
                         }
                         else
-                            // Skip most messages
+                        // Skip most messages
                         {
                             continue;
                         }
@@ -1044,7 +1039,7 @@ namespace PVPNetConnect
                                     {
                                         new Thread(new ThreadStart(() =>
                                         {
-                                            TypedObject body = (TypedObject) to["body"];
+                                            TypedObject body = (TypedObject)to["body"];
                                             if (body.type.Equals("com.riotgames.platform.game.GameDTO"))
                                                 MessageReceived(new GameDTO(body));
                                             else if (body.type.Equals("com.riotgames.platform.game.PlayerCredentialsDto"))
@@ -1071,10 +1066,10 @@ namespace PVPNetConnect
                         if (id == 0)
                         {
                         }
-                        else if (callbacks.ContainsKey((int) id))
+                        else if (callbacks.ContainsKey((int)id))
                         {
-                            RiotGamesObject cb = callbacks[(int) id];
-                            callbacks.Remove((int) id);
+                            RiotGamesObject cb = callbacks[(int)id];
+                            callbacks.Remove((int)id);
                             if (cb != null)
                             {
                                 TypedObject messageBody = result.GetTO("data").GetTO("body");
@@ -1084,10 +1079,10 @@ namespace PVPNetConnect
 
                         else
                         {
-                            results.Add((int) id, result);
+                            results.Add((int)id, result);
                         }
 
-                        pendingInvokes.Remove((int) id);
+                        pendingInvokes.Remove((int)id);
                     }
                 }
                 catch (Exception e)
@@ -1101,7 +1096,6 @@ namespace PVPNetConnect
             decodeThread.IsBackground = true;
             decodeThread.Start();
         }
-
 
         private TypedObject GetResult(int id)
         {
@@ -1153,7 +1147,7 @@ namespace PVPNetConnect
             // Check if we've already received the result
             if (PeekResult(id) != null)
                 return;
-                // Signify a cancelled invoke by giving it a null callback
+            // Signify a cancelled invoke by giving it a null callback
             else
             {
                 callbacks.Add(id, null);
@@ -1164,11 +1158,11 @@ namespace PVPNetConnect
             }
         }
 
-        #endregion
+        #endregion Receive Methods
 
         #region Public Client Methods
 
-        #endregion
+        #endregion Public Client Methods
 
         #region General Returns
 
@@ -1182,6 +1176,6 @@ namespace PVPNetConnect
             return isLoggedIn;
         }
 
-        #endregion
+        #endregion General Returns
     }
 }

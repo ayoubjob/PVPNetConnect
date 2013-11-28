@@ -5,37 +5,101 @@ namespace PVPNetConnect
 {
     public enum Region
     {
-        [ServerValue("prod.na1.lol.riotgames.com")] [LoginQueueValue("https://lq.na1.lol.riotgames.com/")] [LocaleValue("en_US")] [UseGarenaValue(false)] NA,
+        [ServerValue("prod.na1.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.na1.lol.riotgames.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(false)]
+        NA,
 
-        [ServerValue("prod.eu.lol.riotgames.com")] [LoginQueueValue("https://lq.eu.lol.riotgames.com/")] [LocaleValue("en_GB")] [UseGarenaValue(false)] EUW,
+        [ServerValue("prod.eu.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.eu.lol.riotgames.com/")]
+        [LocaleValue("en_GB")]
+        [UseGarenaValue(false)]
+        EUW,
 
-        [ServerValue("prod.eun1.lol.riotgames.com")] [LoginQueueValue("https://lq.eun1.lol.riotgames.com/")] [LocaleValue("en_GB")] [UseGarenaValue(false)] EUN,
+        [ServerValue("prod.eun1.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.eun1.lol.riotgames.com/")]
+        [LocaleValue("en_GB")]
+        [UseGarenaValue(false)]
+        EUN,
 
-        [ServerValue("prod.kr.lol.riotgames.com")] [LoginQueueValue("https://lq.kr.lol.riotgames.com/")] [LocaleValue("ko_KR")] [UseGarenaValue(false)] KR,
+        [ServerValue("prod.kr.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.kr.lol.riotgames.com/")]
+        [LocaleValue("ko_KR")]
+        [UseGarenaValue(false)]
+        KR,
 
-        [ServerValue("prod.br.lol.riotgames.com")] [LoginQueueValue("https://lq.br.lol.riotgames.com/")] [LocaleValue("pt_BR")] [UseGarenaValue(false)] BR,
+        [ServerValue("prod.br.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.br.lol.riotgames.com/")]
+        [LocaleValue("pt_BR")]
+        [UseGarenaValue(false)]
+        BR,
 
-        [ServerValue("prod.tr.lol.riotgames.com")] [LoginQueueValue("https://lq.tr.lol.riotgames.com/")] [LocaleValue("pt_BR")] [UseGarenaValue(false)] TR,
+        [ServerValue("prod.tr.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.tr.lol.riotgames.com/")]
+        [LocaleValue("pt_BR")]
+        [UseGarenaValue(false)]
+        TR,
 
-        [ServerValue("prod.ru.lol.riotgames.com")] [LoginQueueValue("https://lq.ru.lol.riotgames.com/")] [LocaleValue("en_US")] [UseGarenaValue(false)] RU,
+        [ServerValue("prod.ru.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.ru.lol.riotgames.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(false)]
+        RU,
 
-        [ServerValue("prod.pbe1.lol.riotgames.com")] [LoginQueueValue("https://lq.pbe1.lol.riotgames.com/")] [LocaleValue("en_US")] [UseGarenaValue(false)] PBE,
+        [ServerValue("prod.pbe1.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.pbe1.lol.riotgames.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(false)]
+        PBE,
 
-        [ServerValue("prod.lol.garenanow.com")] [LoginQueueValue("https://lq.lol.garenanow.com/")] [LocaleValue("en_US")] [UseGarenaValue(true)] SG,
+        [ServerValue("prod.lol.garenanow.com")]
+        [LoginQueueValue("https://lq.lol.garenanow.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(true)]
+        SG,
 
-        [ServerValue("prod.lol.garenanow.com")] [LoginQueueValue("https://lq.lol.garenanow.com/")] [LocaleValue("en_US")] [UseGarenaValue(true)] MY,
+        [ServerValue("prod.lol.garenanow.com")]
+        [LoginQueueValue("https://lq.lol.garenanow.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(true)]
+        MY,
 
-        [ServerValue("prod.lol.garenanow.com")] [LoginQueueValue("https://lq.lol.garenanow.com/")] [LocaleValue("en_US")] [UseGarenaValue(true)] SGMY,
+        [ServerValue("prod.lol.garenanow.com")]
+        [LoginQueueValue("https://lq.lol.garenanow.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(true)]
+        SGMY,
 
-        [ServerValue("prodtw.lol.garenanow.com")] [LoginQueueValue("https://loginqueuetw.lol.garenanow.com/")] [LocaleValue("en_US")] [UseGarenaValue(true)] TW,
+        [ServerValue("prodtw.lol.garenanow.com")]
+        [LoginQueueValue("https://loginqueuetw.lol.garenanow.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(true)]
+        TW,
 
-        [ServerValue("prodth.lol.garenanow.com")] [LoginQueueValue("https://lqth.lol.garenanow.com/")] [LocaleValue("en_US")] [UseGarenaValue(true)] TH,
+        [ServerValue("prodth.lol.garenanow.com")]
+        [LoginQueueValue("https://lqth.lol.garenanow.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(true)]
+        TH,
 
-        [ServerValue("prodph.lol.garenanow.com")] [LoginQueueValue("https://storeph.lol.garenanow.com/")] [LocaleValue("en_US")] [UseGarenaValue(true)] PH,
+        [ServerValue("prodph.lol.garenanow.com")]
+        [LoginQueueValue("https://storeph.lol.garenanow.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(true)]
+        PH,
 
-        [ServerValue("prodvn.lol.garenanow.com")] [LoginQueueValue("https://lqvn.lol.garenanow.com/")] [LocaleValue("en_US")] [UseGarenaValue(true)] VN,
+        [ServerValue("prodvn.lol.garenanow.com")]
+        [LoginQueueValue("https://lqvn.lol.garenanow.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(true)]
+        VN,
 
-        [ServerValue("prod.oc1.lol.riotgames.com")] [LoginQueueValue("https://lq.oc1.lol.riotgames.com/")] [LocaleValue("en_US")] [UseGarenaValue(false)] OCE
+        [ServerValue("prod.oc1.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.oc1.lol.riotgames.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(false)]
+        OCE
     }
 
     public static class RegionInfo
@@ -47,7 +111,7 @@ namespace PVPNetConnect
 
             FieldInfo fi = type.GetField(value.ToString());
             ServerValue[] attrs =
-                fi.GetCustomAttributes(typeof (ServerValue),
+                fi.GetCustomAttributes(typeof(ServerValue),
                     false) as ServerValue[];
             if (attrs.Length > 0)
             {
@@ -63,7 +127,7 @@ namespace PVPNetConnect
 
             FieldInfo fi = type.GetField(value.ToString());
             LoginQueueValue[] attrs =
-                fi.GetCustomAttributes(typeof (LoginQueueValue),
+                fi.GetCustomAttributes(typeof(LoginQueueValue),
                     false) as LoginQueueValue[];
             if (attrs.Length > 0)
             {
@@ -79,7 +143,7 @@ namespace PVPNetConnect
 
             FieldInfo fi = type.GetField(value.ToString());
             LocaleValue[] attrs =
-                fi.GetCustomAttributes(typeof (LocaleValue),
+                fi.GetCustomAttributes(typeof(LocaleValue),
                     false) as LocaleValue[];
             if (attrs.Length > 0)
             {
@@ -95,7 +159,7 @@ namespace PVPNetConnect
 
             FieldInfo fi = type.GetField(value.ToString());
             UseGarenaValue[] attrs =
-                fi.GetCustomAttributes(typeof (UseGarenaValue),
+                fi.GetCustomAttributes(typeof(UseGarenaValue),
                     false) as UseGarenaValue[];
             if (attrs.Length > 0)
             {

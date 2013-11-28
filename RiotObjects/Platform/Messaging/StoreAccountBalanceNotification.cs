@@ -2,7 +2,7 @@
 
 namespace PVPNetConnect.RiotObjects.Platform.Messaging
 {
-    internal class StoreAccountBalanceNotification : RiotGamesObject
+    public class StoreAccountBalanceNotification : RiotGamesObject
     {
         public override string TypeName
         {

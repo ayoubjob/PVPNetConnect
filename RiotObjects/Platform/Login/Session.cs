@@ -1,5 +1,5 @@
-using System;
 using PVPNetConnect.RiotObjects.Platform.Account;
+using System;
 
 namespace PVPNetConnect.RiotObjects.Platform.Login
 {

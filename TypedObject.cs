@@ -3,7 +3,7 @@
  *
  * @author Gabriel Van Eyck
  */
-///////////////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////////
 //
 //Ported to C# by Ryan A. LaSarre
 //
@@ -41,14 +41,14 @@ namespace PVPNetConnect
         public TypedObject GetTO(string key)
         {
             if (this.ContainsKey(key) && this[key] is TypedObject)
-                return (TypedObject) this[key];
+                return (TypedObject)this[key];
 
             return null;
         }
 
         public string GetString(string key)
         {
-            return (string) this[key];
+            return (string)this[key];
         }
 
         public int? GetInt(string key)
@@ -57,9 +57,9 @@ namespace PVPNetConnect
             if (val == null)
                 return null;
             else if (val is int)
-                return (int) val;
+                return (int)val;
             else
-                return Convert.ToInt32((double) val);
+                return Convert.ToInt32((double)val);
         }
 
         public double? GetDouble(string key)
@@ -68,22 +68,22 @@ namespace PVPNetConnect
             if (val == null)
                 return null;
             else if (val is double)
-                return (double) val;
+                return (double)val;
             else
-                return Convert.ToDouble((int) val);
+                return Convert.ToDouble((int)val);
         }
 
         public bool GetBool(string key)
         {
-            return (bool) this[key];
+            return (bool)this[key];
         }
 
         public object[] GetArray(string key)
         {
             if (this[key] is TypedObject && GetTO(key).type.Equals("flex.messaging.io.ArrayCollection"))
-                return (object[]) GetTO(key)["array"];
+                return (object[])GetTO(key)["array"];
             else
-                return (object[]) this[key];
+                return (object[])this[key];
         }
 
         public override string ToString()
@@ -93,7 +93,7 @@ namespace PVPNetConnect
             else if (type.Equals("flex.messaging.io.ArrayCollection"))
             {
                 StringBuilder sb = new StringBuilder();
-                object[] data = (object[]) this["array"];
+                object[] data = (object[])this["array"];
                 sb.Append("ArrayCollection[");
                 for (int i = 0; i < data.Length; i++)
                 {
