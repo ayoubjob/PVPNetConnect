@@ -10,6 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using PVPNetConnect.RiotObjects;
+using PVPNetConnect.RiotObjects.Platform.Broadcast;
 using PVPNetConnect.RiotObjects.Platform.Game;
 using PVPNetConnect.RiotObjects.Platform.Game.Message;
 using PVPNetConnect.RiotObjects.Platform.Matchmaking;
@@ -1052,6 +1053,10 @@ namespace PVPNetConnect
                                                 body.type.Equals(
                                                     "com.riotgames.platform.matchmaking.SearchingForMatchNotification"))
                                                 MessageReceived(new SearchingForMatchNotification(body));
+                                            else if (
+                                                body.type.Equals(
+                                                    "com.riotgames.platform.broadcast.BroadcastNotification"))
+                                                MessageReceived(new BroadcastNotification(body));
                                             //MessageReceived(to["body"]);
                                         })).Start();
                                     }

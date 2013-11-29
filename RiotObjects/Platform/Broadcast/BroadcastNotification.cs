@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace PVPNetConnect.RiotObjects.Platform.Broadcast
 {
     public class BroadcastNotification : RiotGamesObject
@@ -32,5 +33,8 @@ namespace PVPNetConnect.RiotObjects.Platform.Broadcast
             base.SetFields(this, result);
             callback(this);
         }
+
+        [InternalName("broadcastMessages")]
+        public object[] BroadcastMessages { get; set; }
     }
 }
