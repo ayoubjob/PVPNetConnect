@@ -90,7 +90,9 @@
     <Compile Include="RiotObjects\Platform\Matchmaking\QueueDodger.cs" />
     <Compile Include="RiotObjects\Platform\Matchmaking\QueueInfo.cs" />
     <Compile Include="RiotObjects\Platform\Matchmaking\SearchingForMatchNotification.cs" />
+    <Compile Include="RiotObjects\Platform\Messaging\SimpleDialogMessage.cs" />
     <Compile Include="RiotObjects\Platform\Messaging\StoreAccountBalanceNotification.cs" />
+    <Compile Include="RiotObjects\Platform\Messaging\StoreFulfillmentNotification.cs" />
     <Compile Include="RiotObjects\Platform\Reroll\Pojo\AramPlayerParticipant.cs" />
     <Compile Include="RiotObjects\Platform\Reroll\Pojo\EogPointChangeBreakdown.cs" />
     <Compile Include="RiotObjects\Platform\Reroll\Pojo\PointSummary.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="RiotObjects\Team\TeamInfo.cs" />
     <Compile Include="RTMPSDecoder.cs" />
     <Compile Include="RTMPSEncoder.cs" />
+    <Compile Include="Simulate.cs" />
     <Compile Include="TypedObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
