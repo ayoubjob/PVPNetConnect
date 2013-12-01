@@ -14,6 +14,7 @@ using PVPNetConnect.RiotObjects.Platform.Broadcast;
 using PVPNetConnect.RiotObjects.Platform.Game;
 using PVPNetConnect.RiotObjects.Platform.Game.Message;
 using PVPNetConnect.RiotObjects.Platform.Matchmaking;
+using PVPNetConnect.RiotObjects.Platform.Messaging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +30,8 @@ namespace PVPNetConnect
 {
     public partial class PVPNetConnection
     {
+        public bool KeepDelegatesOnLogout = true;
+
         #region Member Declarations
 
         //RTMPS Connection Info
@@ -664,6 +667,14 @@ namespace PVPNetConnect
                 callbacks.Clear();
                 results.Clear();
 
+                if (!KeepDelegatesOnLogout)
+                {
+                    foreach (Delegate d in OnMessageReceived.GetInvocationList())
+                    {
+                        OnMessageReceived -= (OnMessageReceivedHandler)d;
+                    }
+                }
+
                 client = null;
                 sslStream = null;
 
@@ -1057,6 +1068,14 @@ namespace PVPNetConnect
                                                 body.type.Equals(
                                                     "com.riotgames.platform.broadcast.BroadcastNotification"))
                                                 MessageReceived(new BroadcastNotification(body));
+                                            else if (
+                                                body.type.Equals(
+                                                    "com.riotgames.platform.messaging.StoreAccountBalanceNotification"))
+                                                MessageReceived(new StoreAccountBalanceNotification(body));
+                                            else if (
+                                                body.type.Equals(
+                                                    "com.riotgames.platform.messaging.persistence.SimpleDialogMessage"))
+                                                MessageReceived(new SimpleDialogMessage(body));
                                             //MessageReceived(to["body"]);
                                         })).Start();
                                     }
