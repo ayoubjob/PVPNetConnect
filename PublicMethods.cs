@@ -1227,11 +1227,14 @@ namespace PVPNetConnect
 
         public async Task<object> SaveSpellBook(SpellBookDTO Spellbook)
         {
-            int Id = Invoke("spellBookService", "saveSpellBook", new object[] { Spellbook });
+            int Id = Invoke("spellBookService", "saveSpellBook",
+                new object[] { Spellbook.GetBaseTypedObject() });
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
+            TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
+            SpellBookDTO result = new SpellBookDTO(messageBody);
             results.Remove(Id);
-            return null;
+            return result;
         }
 
         public async Task<object> CancelFromQueueIfPossible(int arg0)
