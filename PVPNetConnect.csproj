@@ -142,6 +142,8 @@
     <Compile Include="RiotObjects\Platform\Summoner\TalentGroup.cs" />
     <Compile Include="RiotObjects\Platform\Summoner\TalentRow.cs" />
     <Compile Include="RiotObjects\Platform\Systemstate\ClientSystemStatesNotification.cs" />
+    <Compile Include="RiotObjects\Platform\Trade\PotentialTradersDTO.cs" />
+    <Compile Include="RiotObjects\Platform\Trade\TradeContractDTO.cs" />
     <Compile Include="RiotObjects\RiotGamesObject.cs" />
     <Compile Include="RiotObjects\Team\CreatedTeam.cs" />
     <Compile Include="RiotObjects\Team\Dto\PlayerDTO.cs" />

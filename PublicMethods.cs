@@ -16,6 +16,7 @@ using PVPNetConnect.RiotObjects.Platform.Summoner.Icon;
 using PVPNetConnect.RiotObjects.Platform.Summoner.Masterybook;
 using PVPNetConnect.RiotObjects.Platform.Summoner.Runes;
 using PVPNetConnect.RiotObjects.Platform.Summoner.Spellbook;
+using PVPNetConnect.RiotObjects.Platform.Trade;
 using PVPNetConnect.RiotObjects.Team;
 using PVPNetConnect.RiotObjects.Team.Dto;
 using System;
@@ -1117,20 +1118,48 @@ namespace PVPNetConnect
             return result;
         }
 
+        public async Task<PotentialTradersDTO> GetPotentialTraders()
+        {
+            int Id = Invoke("lcdsChampionTradeService", "getPotentialTraders", new object[] { });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
+            PotentialTradersDTO result = new PotentialTradersDTO(messageBody);
+            results.Remove(Id);
+            return result;
+        }
+
+        public async Task<object> AttemptTrade(string SummonerInternalName, int ChampionId)
+        {
+            int Id = Invoke("lcdsChampionTradeService", "attemptTrade", new object[] { SummonerInternalName, ChampionId, false });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            results.Remove(Id);
+            return null;
+        }
+
+        public async Task<object> DeclineTrade()
+        {
+            int Id = Invoke("lcdsChampionTradeService", "dismissTrade", new object[] { });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            results.Remove(Id);
+            return null;
+        }
+
+        public async Task<object> AcceptTrade(string SummonerInternalName, int ChampionId)
+        {
+            int Id = Invoke("lcdsChampionTradeService", "attemptTrade", new object[] { SummonerInternalName, ChampionId, true });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            results.Remove(Id);
+            return null;
+        }
+
         //Todo - get actual data objects
         public async Task<object> GetGameMapList()
         {
             int Id = Invoke("gameMapService", "getGameMapList", new object[] { });
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
-            results.Remove(Id);
-            return messageBody;
-        }
-
-        public async Task<object> GetPotentialTraders()
-        {
-            int Id = Invoke("lcdsChampionTradeService", "getPotentialTraders", new object[] { });
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
             TypedObject messageBody = results[Id].GetTO("data").GetTO("body");
@@ -1188,24 +1217,6 @@ namespace PVPNetConnect
         public async Task<object> TeamChangeOwner(int arg0, TeamId teamId)
         {
             int Id = Invoke("summonerTeamService", "changeOwner", new object[] { arg0, teamId.GetBaseTypedObject() });
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
-        public async Task<object> DeclineTrade()
-        {
-            int Id = Invoke("lcdsChampionTradeService", "dismissTrade", new object[] { });
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
-        public async Task<object> AttemptTrade(string arg0, int arg1, bool arg2)
-        {
-            int Id = Invoke("lcdsChampionTradeService", "attemptTrade", new object[] { arg0, arg1, arg2 });
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
             results.Remove(Id);

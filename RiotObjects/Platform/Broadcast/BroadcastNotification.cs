@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 namespace PVPNetConnect.RiotObjects.Platform.Broadcast
 {
     public class BroadcastNotification : RiotGamesObject

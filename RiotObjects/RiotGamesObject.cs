@@ -161,13 +161,13 @@ namespace PVPNetConnect.RiotObjects
                     {
                         value = Convert.ToString(result[intern.Name]);
                     }
-                    else if (type == typeof(Int32))
-                    {
-                        value = Convert.ToInt32(result[intern.Name]);
-                    }
                     else if (type == typeof(Int64))
                     {
                         value = Convert.ToInt64(result[intern.Name]);
+                    }
+                    else if (type == typeof(Int32))
+                    {
+                        value = Convert.ToInt32(result[intern.Name]);
                     }
                     else if (type == typeof(double))
                     {

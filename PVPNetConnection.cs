@@ -15,6 +15,7 @@ using PVPNetConnect.RiotObjects.Platform.Game;
 using PVPNetConnect.RiotObjects.Platform.Game.Message;
 using PVPNetConnect.RiotObjects.Platform.Matchmaking;
 using PVPNetConnect.RiotObjects.Platform.Messaging;
+using PVPNetConnect.RiotObjects.Platform.Trade;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1076,6 +1077,10 @@ namespace PVPNetConnect
                                                 body.type.Equals(
                                                     "com.riotgames.platform.messaging.persistence.SimpleDialogMessage"))
                                                 MessageReceived(new SimpleDialogMessage(body));
+                                            else if (
+                                                body.type.Equals(
+                                                "com.riotgames.platform.trade.api.contract.TradeContractDTO"))
+                                                MessageReceived(new TradeContractDTO(body));
                                             //MessageReceived(to["body"]);
                                         })).Start();
                                     }
