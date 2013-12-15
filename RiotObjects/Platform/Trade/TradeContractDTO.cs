@@ -48,10 +48,10 @@ namespace PVPNetConnect.RiotObjects.Platform.Trade
         [InternalName("state")]
         public String State { get; set; }
 
-        [InternalName("responderInternalSummonerName")]
-        public Double ResponderInternalSummonerName { get; set; }
-
         [InternalName("responderChampionId")]
-        public String ResponderChampionId { get; set; }
+        public Double ResponderChampionId { get; set; }
+
+        [InternalName("responderInternalSummonerName")]
+        public String ResponderInternalSummonerName { get; set; }
     }
 }
