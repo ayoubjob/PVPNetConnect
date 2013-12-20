@@ -1156,6 +1156,24 @@ namespace PVPNetConnect
             return null;
         }
 
+        public async Task<object> CreateDefaultSummoner(string SummonerName)
+        {
+            int Id = Invoke("summonerService", "createDefaultSummoner", new object[] { SummonerName });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            results.Remove(Id);
+            return null;
+        }
+
+        public async Task<object> GetLoginDataPacketForUser()
+        {
+            int Id = Invoke("clientFacadeService", "getLoginDataPacketForUser", new object[] { });
+            while (!results.ContainsKey(Id))
+                await Task.Delay(10);
+            results.Remove(Id);
+            return null;
+        }
+
         //Todo - get actual data objects
         public async Task<object> GetGameMapList()
         {
