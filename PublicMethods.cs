@@ -1016,7 +1016,7 @@ namespace PVPNetConnect
             return result;
         }
 
-        public async Task<object> AcceptInviteForMatchmakingGame(double gameId)
+        public async Task<object> AcceptInviteForMatchmakingGame(string gameId)
         {
             int Id = Invoke("matchmakerService", "acceptInviteForMatchmakingGame", new object[] { gameId });
             while (!results.ContainsKey(Id))
@@ -1159,15 +1159,6 @@ namespace PVPNetConnect
         public async Task<object> CreateDefaultSummoner(string SummonerName)
         {
             int Id = Invoke("summonerService", "createDefaultSummoner", new object[] { SummonerName });
-            while (!results.ContainsKey(Id))
-                await Task.Delay(10);
-            results.Remove(Id);
-            return null;
-        }
-
-        public async Task<object> GetLoginDataPacketForUser()
-        {
-            int Id = Invoke("clientFacadeService", "getLoginDataPacketForUser", new object[] { });
             while (!results.ContainsKey(Id))
                 await Task.Delay(10);
             results.Remove(Id);
