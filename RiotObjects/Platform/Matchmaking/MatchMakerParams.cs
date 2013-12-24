@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace PVPNetConnect.RiotObjects.Platform.Matchmaking
 {
@@ -48,7 +49,7 @@ namespace PVPNetConnect.RiotObjects.Platform.Matchmaking
         public String BotDifficulty { get; set; }
 
         [InternalName("team")]
-        public object Team { get; set; }
+        public List<int> Team { get; set; }
 
         [InternalName("queueIds")]
         public Int32[] QueueIds { get; set; }
