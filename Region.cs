@@ -112,6 +112,18 @@ namespace PVPNetConnect
         [LocaleValue("en_US")]
         [UseGarenaValue(false)]
         OCE
+
+        [ServerValue("prod.la1.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.la1.lol.riotgames.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(false)]
+        LAN,
+
+        [ServerValue("prod.la2.lol.riotgames.com")]
+        [LoginQueueValue("https://lq.la2.lol.riotgames.com/")]
+        [LocaleValue("en_US")]
+        [UseGarenaValue(false)]
+        LAS
     }
 
     public static class RegionInfo
