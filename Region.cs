@@ -111,7 +111,7 @@ namespace PVPNetConnect
         [LoginQueueValue("https://lq.oc1.lol.riotgames.com/")]
         [LocaleValue("en_US")]
         [UseGarenaValue(false)]
-        OCE
+        OCE,
 
         [ServerValue("prod.la1.lol.riotgames.com")]
         [LoginQueueValue("https://lq.la1.lol.riotgames.com/")]
