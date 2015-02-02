@@ -602,7 +602,8 @@ namespace PVPNetConnect
         private string GetErrorMessage(TypedObject message)
         {
             // Works for clientVersion
-            return message.GetTO("data").GetTO("rootCause").GetString("message");
+            var msg = message.GetTO("data").GetTO("rootCause").GetString("message");
+            return msg ?? "Password Change Failure";
         }
 
         private string GetErrorCode(TypedObject message)
@@ -1040,6 +1041,7 @@ namespace PVPNetConnect
                         if (result["result"].Equals("_error"))
                         {
                             Error(GetErrorMessage(result), GetErrorCode(result), ErrorType.Receive);
+                            return;
                         }
 
                         if (result["result"].Equals("receive"))
