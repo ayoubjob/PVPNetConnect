@@ -126,6 +126,9 @@ namespace PVPNetConnect.RiotObjects.Platform.Clientfacade.Domain
         [InternalName("platformId")]
         public String PlatformId { get; set; }
 
+        [InternalName("emailStatus")]
+        public String EmailStatus { get; set; }
+
         [InternalName("matchMakingEnabled")]
         public Boolean MatchMakingEnabled { get; set; }
 
