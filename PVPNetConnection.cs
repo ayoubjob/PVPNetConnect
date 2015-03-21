@@ -405,7 +405,7 @@ namespace PVPNetConnect
                 }
                 else
                 {
-                    Error("Unable to get Auth Key \n" + e, ErrorType.AuthKey);
+                    Error("Unable to get Auth Key", ErrorType.AuthKey);
                     Disconnect();
                 }
 
@@ -451,7 +451,7 @@ namespace PVPNetConnect
             }
             catch (Exception e)
             {
-                Error("Unable to connect to Riot Games web server \n" + e.Message, ErrorType.General);
+                Error("Unable to connect to Riot Games web server", ErrorType.General);
                 Disconnect();
                 return false;
             }
